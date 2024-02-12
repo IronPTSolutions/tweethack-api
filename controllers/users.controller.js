@@ -8,11 +8,11 @@ module.exports.create = (req, res, next) => {
       if (user) {
         next(createError(StatusCodes.BAD_REQUEST, 'Username or email already in use'));
       } else {
-        User.create(req.body)
+        return User.create(req.body)
           .then(userCreated => {
             res.status(StatusCodes.CREATED).json(userCreated)
           })
-          .catch(next)
-      }
-    })
+        }
+      })
+    .catch(next)
 }
