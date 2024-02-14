@@ -17,6 +17,7 @@ router.post('/users', usersController.create);
 // Tweets
 router.post('/tweets', authMiddleware.isAuthenticated, tweetsController.create);
 router.get('/tweets/me', authMiddleware.isAuthenticated, tweetsController.getCurrentUserTweets)
+router.get('/tweets/:id', tweetsController.getUserTweets)
 
 // Follows
 router.post('/follows/:followedId', authMiddleware.isAuthenticated, followsController.toggleFollow);
