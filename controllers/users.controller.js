@@ -1,6 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 const createError = require('http-errors');
 const User = require("../models/User.model")
+const Follow = require('../models/Follow.model');
 
 module.exports.create = (req, res, next) => {
   User.findOne({ $or: [{ username: req.body.username }, { email: req.body.email }] })
@@ -18,12 +19,16 @@ module.exports.create = (req, res, next) => {
 }
 
 const getUser = (id, req, res, next) => {
-  User.findById(id)
-    .then(user => {
+  const followingPromise = Follow.countDocuments({ follower: id });
+  const followedPromise = Follow.countDocuments({ followed: id });
+  const profilePromise = User.findById(id);
+
+  Promise.all([ profilePromise, followingPromise, followedPromise ])
+    .then(([ user, followingCount, followedCount ]) => {
       if (!user) {
         next(createError(StatusCodes.NOT_FOUND, 'User not found'))
       } else {
-        res.json(user)
+        res.json({ user, following: followingCount, followed: followedCount })
       }
     })
     .catch(next)

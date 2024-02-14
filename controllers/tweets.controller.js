@@ -11,6 +11,7 @@ module.exports.create = (req, res, next) => {
 
 module.exports.getCurrentUserTweets = (req, res, next) => {
   Tweet.find({ user: req.currentUserId }).sort({ createdAt: 'desc' })
+    .populate('user')
     .then(tweets => {
       res.json(tweets);
     })
