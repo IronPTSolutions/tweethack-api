@@ -22,7 +22,7 @@ const getUser = (id, req, res, next) => {
   const followingPromise = Follow.countDocuments({ follower: id });
   const followedPromise = Follow.countDocuments({ followed: id });
   const profilePromise = User.findById(id)
-    .populate({ path: 'likes', populate: 'tweet' });
+    .populate({ path: 'likes', populate: { path: 'tweet', populate: 'user' } });
 
   Promise.all([ profilePromise, followingPromise, followedPromise ])
     .then(([ user, followingCount, followedCount ]) => {
