@@ -5,6 +5,7 @@ const tweetsController = require('../controllers/tweets.controller');
 const followsController = require('../controllers/follows.controller');
 const likesController = require('../controllers/likes.controller');
 const authMiddleware = require('../middlewares/auth.middleware');
+const upload = require('./storage.config');
 
 // Auth
 router.post('/login', authController.login);
@@ -12,7 +13,7 @@ router.post('/login', authController.login);
 // Users
 router.get('/users/me', authMiddleware.isAuthenticated, usersController.getCurrentUser)
 router.get('/users/:id', authMiddleware.isAuthenticated, usersController.getUser)
-router.post('/users', usersController.create);
+router.post('/users', upload.single('avatar'), usersController.create);
 
 // Tweets
 router.post('/tweets', authMiddleware.isAuthenticated, tweetsController.create);
