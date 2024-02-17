@@ -16,6 +16,7 @@ router.post('/users', usersController.create);
 
 // Tweets
 router.post('/tweets', authMiddleware.isAuthenticated, tweetsController.create);
+router.get('/tweets/timeline/:page', authMiddleware.isAuthenticated, tweetsController.timeline);
 router.get('/tweets/me', authMiddleware.isAuthenticated, tweetsController.getCurrentUserTweets)
 router.get('/tweets/:id', authMiddleware.isAuthenticated, tweetsController.getUserTweets)
 
