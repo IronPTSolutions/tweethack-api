@@ -11,20 +11,20 @@ router.post('/login', authController.login);
 
 // Users
 router.get('/users/me', authMiddleware.isAuthenticated, usersController.getCurrentUser)
-router.get('/users/:id', usersController.getUser)
+router.get('/users/:id', authMiddleware.isAuthenticated, usersController.getUser)
 router.post('/users', usersController.create);
 
 // Tweets
 router.post('/tweets', authMiddleware.isAuthenticated, tweetsController.create);
 router.get('/tweets/me', authMiddleware.isAuthenticated, tweetsController.getCurrentUserTweets)
-router.get('/tweets/:id', tweetsController.getUserTweets)
+router.get('/tweets/:id', authMiddleware.isAuthenticated, tweetsController.getUserTweets)
 
 // Follows
 router.post('/follows/:followedId', authMiddleware.isAuthenticated, followsController.toggleFollow);
 router.get('/following/me', authMiddleware.isAuthenticated, followsController.getCurrentUserFollowing);
-router.get('/following/:id', followsController.getUserFollowing);
+router.get('/following/:id', authMiddleware.isAuthenticated, followsController.getUserFollowing);
 router.get('/followed/me', authMiddleware.isAuthenticated, followsController.getCurrentUserFollowed);
-router.get('/followed/:id', followsController.getUserFollowed);
+router.get('/followed/:id', authMiddleware.isAuthenticated, followsController.getUserFollowed);
 
 // Likes
 router.post('/likes/:tweetOwner/:tweet', authMiddleware.isAuthenticated, likesController.toggleLike);

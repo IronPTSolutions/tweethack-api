@@ -28,7 +28,7 @@ const getUser = (id, req, res, next) => {
       if (!user) {
         next(createError(StatusCodes.NOT_FOUND, 'User not found'))
       } else {
-        res.json({ user, following: followingCount, followed: followedCount })
+        res.json({ data: user, following: followingCount, followed: followedCount })
       }
     })
     .catch(next)
