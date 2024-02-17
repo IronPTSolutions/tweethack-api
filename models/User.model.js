@@ -35,7 +35,6 @@ const userSchema = mongoose.Schema(
         // Sirve para cambiar el output de los endpoints cuando hago res.json
         ret.id = ret._id;
         delete ret.__v;
-        delete ret._id;
         delete ret.password;
       },
     },
