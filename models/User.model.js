@@ -41,6 +41,13 @@ const userSchema = mongoose.Schema(
     },
   }
 );
+userSchema.virtual('likes', {
+  ref: 'Like',
+  localField: '_id',
+  foreignField: 'likingUser',
+  justOne: false
+})
+
 
 // Crear el metodo para comparar contraseñas
 

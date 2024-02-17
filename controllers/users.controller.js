@@ -21,7 +21,8 @@ module.exports.create = (req, res, next) => {
 const getUser = (id, req, res, next) => {
   const followingPromise = Follow.countDocuments({ follower: id });
   const followedPromise = Follow.countDocuments({ followed: id });
-  const profilePromise = User.findById(id);
+  const profilePromise = User.findById(id)
+    .populate('likes');
 
   Promise.all([ profilePromise, followingPromise, followedPromise ])
     .then(([ user, followingCount, followedCount ]) => {

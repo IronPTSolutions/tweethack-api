@@ -23,7 +23,7 @@ const getUserTweetsById = (id, req, res, next) => {
         .then(likesPerTweet => { // [3, 0, 50, 100]
           const response = likesPerTweet.map((numLikes, index) => {
             return {
-              tweet: tweets[index],
+              data: tweets[index],
               likes: numLikes,
             }
           })
